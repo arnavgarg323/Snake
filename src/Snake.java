@@ -78,10 +78,14 @@ public class Snake implements ActionListener, KeyListener {
 
         if (gameStatus == 0) {
 
+            snakeBodies.clear();
+
             up = false;
             down = false;
             left = false;
             right = false;
+            xDir = 0;
+            yDir = 0;
 
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 50));
@@ -118,20 +122,18 @@ public class Snake implements ActionListener, KeyListener {
                 gameStatus = 3;
             }
 
-            /*
-            if(snakeBodies.size() > 3) {
-                for (SnakeBody body : snakeBodies) {
-                    if (snakeBodies.get(0).getX() < body.getX() + body.getWidth() &&
-                            snakeBodies.get(0).getX() + snakeBodies.get(0).getWidth() > body.getX() &&
-                            snakeBodies.get(0).getY() < body.getY() + body.getHeight() &&
-                            snakeBodies.get(0).getY() + snakeBodies.get(0).getHeight() > body.getY()) {
 
-                        gameStatus = 3;
-                        break;
-                    }
+            for (int i = 10; i < snakeBodies.size(); i++) {
+                SnakeBody body = snakeBodies.get(i);
+                if (snakeBodies.get(0).getX() < body.getX() + body.getWidth() &&
+                        snakeBodies.get(0).getX() + snakeBodies.get(0).getWidth() > body.getX() &&
+                        snakeBodies.get(0).getY() < body.getY() + body.getHeight() &&
+                        snakeBodies.get(0).getY() + snakeBodies.get(0).getHeight() > body.getY()) {
+
+                    gameStatus = 3;
+                    break;
                 }
             }
-             */
 
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 50));
@@ -163,14 +165,13 @@ public class Snake implements ActionListener, KeyListener {
             down = false;
             left = false;
             right = false;
-            yDir = 0;
+            xDir = 0;
             yDir = 0;
         }
     }
 
     public void move(){
         SnakeBody temp = snakeBodies.get(0);
-        SnakeBody last = snakeBodies.get(snakeBodies.size()-1);
         SnakeBody newStart = new SnakeBody(temp.getX() + xDir * 5, temp.getY() + yDir * 5);
         for(int i = snakeBodies.size()-1; i >= 1; i--){
             snakeBodies.set(i, snakeBodies.get(i-1));
@@ -261,10 +262,7 @@ public class Snake implements ActionListener, KeyListener {
 
                 gameStatus = 1;
             }
-        } else if(id == KeyEvent.VK_D) {
-            yDir =0;
-            xDir =0;
-        }
+        } 
     }
 
     @Override
